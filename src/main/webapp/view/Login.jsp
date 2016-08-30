@@ -10,6 +10,7 @@
 This is Login Page<br>
 
 Enter UserName:<input type="text"><br>
-Enter Password:<input type="text">
+Enter Password:<input type="text"><br>
+Submit:<input type="button" value="submit">
 </body>
 </html>
