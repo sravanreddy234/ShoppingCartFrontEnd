@@ -29,6 +29,7 @@ public class UserController {
 	public ModelAndView login(@RequestParam(value="id") String id,
 			@RequestParam(value="password") String password,HttpSession session){
 		
+	
 		ModelAndView mv = new ModelAndView("home");
 		String msg;
 		userDetails = userDetailsDAO.isValidUser(id,password);
@@ -50,4 +51,5 @@ public class UserController {
 		return mv;
 		
 	}
+	
 }

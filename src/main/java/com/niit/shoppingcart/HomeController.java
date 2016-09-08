@@ -34,7 +34,7 @@ public class HomeController {
 		
 		return mv;
 	}
-	@RequestMapping("/Register")
+	@RequestMapping("/Registration")
 	public ModelAndView register()
 	{
 		ModelAndView mv=new ModelAndView("Registration");
