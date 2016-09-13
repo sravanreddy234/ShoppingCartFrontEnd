@@ -1,5 +1,6 @@
 package com.niit.shoppingcart;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.niit.shoppingcart.dao.CategoryDAO;
 import com.niit.shoppingcart.dao.UserDetailsDAO;
+import com.niit.shoppingcart.model.Category;
 import com.niit.shoppingcart.model.UserDetails;
 
 @Controller
@@ -25,9 +28,16 @@ public class UserController {
 	@Autowired
 	UserDetails userDetails;
 	
+	@Autowired
+	private Category category;
+	
+	@Autowired
+	private CategoryDAO categoryDAO;
+	
 	@RequestMapping("/login")
 	public ModelAndView login(@RequestParam(value="id") String id,
 			@RequestParam(value="password") String password,HttpSession session){
+		
 		
 	
 		ModelAndView mv = new ModelAndView("home");
@@ -50,6 +60,18 @@ public class UserController {
 		}
 		return mv;
 		
+	}
+	
+	public ModelAndView logout(HttpServletRequest request, HttpSession session){
+		ModelAndView mv= new ModelAndView("/home");
+		session.invalidate();
+		session=request.getSession(true);
+		session.setAttribute("category", category);
+		session.setAttribute("categoryList", categoryDAO.list());
+		
+		mv.addObject("logoutMessage", "you successfully logged out");
+		mv.addObject("loggedout", "true");
+		return mv;
 	}
 	
 }

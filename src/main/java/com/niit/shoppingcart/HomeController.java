@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.niit.shoppingcart.dao.CategoryDAO;
+import com.niit.shoppingcart.dao.UserDetailsDAO;
 import com.niit.shoppingcart.model.Category;
+import com.niit.shoppingcart.model.UserDetails;
 
 @Controller
 public class HomeController {
@@ -19,7 +21,16 @@ public class HomeController {
 	}*/
 	
 	@Autowired
-	CategoryDAO categoryDAO;
+	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	private Category category;
+	
+	@Autowired
+	private UserDetailsDAO userDetailsDAO;
+	
+	@Autowired
+	UserDetails userDetails;
 	
 	@RequestMapping("/")
 	public ModelAndView home()
