@@ -8,12 +8,12 @@
 <title>Spring Login Form</title>
 </head>
 <body>
-    <form:form name="submitForm" method="POST">
+    <form:form action="login" commandName="userDetails" method="POST">
         <div align="center">
             <table>
                 <tr>
                     <td>User Name</td>
-                    <td><input type="text" name="userName" /></td>
+                    <td><input type="text" name="id" /></td>
                 </tr>
                 <tr>
                     <td>Password</td>
@@ -21,7 +21,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Submit" /></td>
+                    <td><input type="submit" value="Submit" /></a></td>
                 </tr>
             </table>
             <div style="color: red">${error}</div>

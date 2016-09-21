@@ -2,9 +2,16 @@ package com.niit.shoppingcart;
 
 import java.util.List;
 
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.niit.shoppingcart.dao.CategoryDAO;
@@ -15,51 +22,77 @@ import com.niit.shoppingcart.model.UserDetails;
 @Controller
 public class HomeController {
 	
-	/*@RequestMapping("/")
-	public String home(){
-		return "Home";
-	}*/
+	Logger log=LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private CategoryDAO categoryDAO;
+	CategoryDAO categoryDAO;
 	
 	@Autowired
 	private Category category;
 	
 	@Autowired
-	private UserDetailsDAO userDetailsDAO;
-	
-	@Autowired
 	UserDetails userDetails;
 	
-	@RequestMapping("/")
-	public ModelAndView home()
-	{
-		ModelAndView mv=new ModelAndView("/Home");
-		mv.addObject("message","Thank you for visiting");
+	//If you want to navigate to other page with out carrying the data.
+	
+	/*@RequestMapping("/")
+	public String home(){
 		
-		//get all the categories along with products
-		List<Category> categoryList=categoryDAO.list();
-		mv.addObject("categoryList", categoryList);
-		System.out.println("size:" + categoryList.size());
+		return "Home";
+	}*/
+	
+	//If you want navigate to other page with carrying the data.
+	
+	@RequestMapping("/")
+	public ModelAndView home(HttpSession session)
+	{
+		log.debug("Starting of the method onLoad");
+		ModelAndView mv= new ModelAndView("Home");
+		session.setAttribute("category",category);
+		session.setAttribute("categoryList",categoryDAO.list());
+		mv.addObject("message","Thank you for visiting this url");
+		
+		//Get all the categories along with products
+		//you have to integrate front project to backend project
+		List<Category> categoryList=   categoryDAO.list();
+		mv.addObject("categoryList",categoryList);
+		System.out.println("Size:"+categoryList.size());
+		log.debug("Ending of the method onLoad");
 		
 		return mv;
+	}
+	//SPA-Single Page Application
+	
+	@Autowired
+	UserDetailsDAO userDetailsDAO;
+	
+	@RequestMapping(value="register", method=RequestMethod.POST)
+	public ModelAndView registration(@ModelAttribute UserDetails userDetails)
+	{
+		ModelAndView mv= new ModelAndView("Home");
+		
+/*		if(userDetailsDAO.get(userDetails.getId())== null){*/
+			userDetailsDAO.save(userDetails);
+			return mv;
+		/*}
+		return mv;*/
+		
+		
+	
+	}
+	
+	@RequestMapping("/Login")
+	public ModelAndView login()
+	{
+		ModelAndView mv= new ModelAndView("Login");
+		mv.addObject("userClickLoginHere","true");
+		return mv;
+		
 	}
 	@RequestMapping("/Registration")
-	public ModelAndView register()
-	{
+	public ModelAndView register(){
 		ModelAndView mv=new ModelAndView("Registration");
-		mv.addObject("UserClickedRegisterHere","true");
-		return mv;
-		 
+		return mv.addObject("userClickedRegisterHere", true);
 	}
-	@RequestMapping("/Login")
-	public ModelAndView Login()
-	{
-		ModelAndView mv = new ModelAndView("Login");
-		mv.addObject("UserClickedLoginHere","true");
-		return mv;
-		
-	}
-
 }
+
