@@ -90,38 +90,38 @@ public class CheckoutController {
 
 	public String saveDetails(ShippingAddress shippingAddress){
 		
-		/* Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      String name = auth.getName();
 			UserDetails userDetails=userDetailsDAO.getCustomerByUserName(name);
 			String loggedInUser = userDetails.getId();
-	      shippingAddress.setUserId(loggedInUser);*/
+	      shippingAddress.setUserId(loggedInUser);
 		shippingAddressDAO.saveOrUpdate(shippingAddress);
 
 		return "success";
 	}
 	public String saveDetails(BillingAddress billingAddress){
 		
-		/* Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      String name = auth.getName();
 			UserDetails userDetails=userDetailsDAO.getCustomerByUserName(name);
 			String loggedInUser = userDetails.getId();
-	      billingAddress.setUserId(loggedInUser);*/
+	      billingAddress.setUserId(loggedInUser);
 		billingAddressDAO.saveOrUpdate(billingAddress);
 		return "success";
 	}
 	public String saveDetails(CardDetail cardDetail){
-		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      String name = auth.getName();
 			UserDetails userDetails=userDetailsDAO.getCustomerByUserName(name);
 			String loggedInUser = userDetails.getId();
-	      cardDetail.setUserId(loggedInUser);*/
+	      cardDetail.setUserId(loggedInUser);
 		cardDetailDAO.saveOrUpdate(cardDetail);
 		return "success";	
 	}
 	
 	
 	public String remove(){
-		 /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      String name = auth.getName();
 			UserDetails userDetails=userDetailsDAO.getCustomerByUserName(name);
 			String loggedInUser = userDetails.getId();
@@ -132,7 +132,7 @@ public class CheckoutController {
 				cartDAO.update(cartList.get(i));
 				}
 				
-			}*/
+			}
 			return "success";
 	
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.niit.shoppingcart.dao.CartDAO;
 import com.niit.shoppingcart.dao.CategoryDAO;
 import com.niit.shoppingcart.dao.ProductDAO;
+import com.niit.shoppingcart.dao.UserDetailsDAO;
 import com.niit.shoppingcart.model.Cart;
 import com.niit.shoppingcart.model.Category;
 import com.niit.shoppingcart.model.Product;
@@ -33,6 +36,9 @@ public class CartController {
 	
 	@Autowired
 	UserDetails userDetails;
+	
+	@Autowired
+	UserDetailsDAO userDetailsDAO;
 
 	@Autowired(required = true)
 	private CartDAO cartDAO;
@@ -46,8 +52,12 @@ public class CartController {
 	
 	@RequestMapping(value = "myCart", method = RequestMethod.GET)
 	public String myCart(Model model, HttpSession session) {
-
-		String loggedInUser=(String) session.getAttribute("loggedInUserID");
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); 
+		UserDetails userDetails=userDetailsDAO.getCustomerByUserName(name);
+		String loggedInUser=userDetails.getId();
+		//String loggedInUser=(String) session.getAttribute("loggedInUserID");
 		model.addAttribute("cart", new Cart());
 		model.addAttribute("product", product);
 		model.addAttribute("productList",this.productDAO.list());
@@ -64,33 +74,27 @@ public class CartController {
 		model.addAttribute("sum",sum);
 	}
 		model.addAttribute("userclickedcart", true);
-		
+		session.setAttribute("loggedInUser", loggedInUser);
 		return "/Home";
 	
 	}
 
-	// For add and update cart both
+	
 	@RequestMapping(value = "/cartadd/{productId}")
 	public String addToCart(@PathVariable("productId") String productId,HttpSession session,Model model){
 	
 		System.out.println(productId);
-		String loggedInUser=(String) session.getAttribute("loggedInUserID");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); 
+		UserDetails userDetails=userDetailsDAO.getCustomerByUserName(name);
+		String loggedInUser=userDetails.getId();
+		//String loggedInUser=(String) session.getAttribute("loggedInUserID");
 		Product product = productDAO.get(productId);
 		List<Cart> cartList=cartDAO.getByUser(loggedInUser,"N");
 		if(loggedInUser==null){
 			return "redirect:/Login";
 		}
-		/*else{
-			if(cartList!=null){
-			for(int i=0;i<cartList.size();i++){
-			if(product.getProductId()==cartDAO.getByUser(loggedInUser,"N").get(i).getProductID()){
-				cart=cartList.get(i);
-				cart.setQuantity(cart.getQuantity()+1);
-				cart.setTotal(cart.getQuantity()*product.getPrice());
-				cartDAO.update(cart);
-				return "redirect:/";
-			}
-			}*/
+		
 		else {
 			if (cartList == null) {
 				int q = 1;

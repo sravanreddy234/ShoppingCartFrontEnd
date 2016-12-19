@@ -66,7 +66,7 @@
 				<ul class="nav navbar-nav navbar-right">
 				
 				
-							<c:if test="${not empty loggedInUser}">
+							<%-- <c:if test="${not empty loggedInUser}">
 							<li><a>Welcome: ${loggedInUser}</a></li>
                             <li><a href="logout">Logout</a></li>
 						
@@ -82,26 +82,31 @@
 						<c:if test="${loggedInUser == null}">
                             <li><a href="<c:url value="/Login" />"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
                             <li><a href="<c:url value="/Registration" />"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
-                        </c:if>
-						
+                        </c:if> --%>
 				
-					<%-- <c:choose>
-						<c:when test="${empty loggedInUser}">
-							<li><a href="Registration"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <c:choose>
+						<c:when test="${pageContext.request.userPrincipal.name==null}">
+						
+							<li><a href="<c:url value="/Login" />"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                            <li><a href="<c:url value="/Registration" />"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>						</c:when>
+
+						<c:when test="${pageContext.request.userPrincipal.name!=null}" >
+							<li><a href="myCart"> <i class="fa fa-shopping-cart"
+									aria-hidden="true"></i> Cart
+							</a></li>
+							<li><a>Welcome: ${pageContext.request.userPrincipal.name }</a></li>
+			<li><a href="<c:url value="/j_spring_security_logout" />"></><i class="fa fa-unlock"></i><em>LogOut</em></a></li>
+								
 						</c:when>
-					</c:choose> --%>
+					</c:choose>		
+				
+					
 					</ul>
 					
 					</div>
 					</div>
 </nav>
-			<%-- <c:choose>
-							<c:when test="${not empty loggedInUser}">
-							<td>Welcome ${loggedInUser},</td>
-							<td align="center"><a href="logout">Logout</a></td>
-						</c:when>
-						</c:choose> --%>
+			
 			
 			
 <c:if test="${image==true}">

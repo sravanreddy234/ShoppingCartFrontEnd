@@ -67,8 +67,8 @@
 						<div class="col-md-offset-3">
 						<input type="submit" name="_eventId_submitBillingAddress"
 							class="btn btn-md btn-success" value="Save">
-						<input type="submit" name="_eventId_back"
-							class="btn btn-md btn-danger" value="Back"></div>
+						<input type="submit" name="_eventId_cancel"
+							class="btn btn-md btn-danger" value="cancel"></div>
 					</form:form>
 				</div>
 			</div>

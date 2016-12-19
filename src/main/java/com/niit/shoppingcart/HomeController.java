@@ -66,8 +66,6 @@ public class HomeController {
 	public ModelAndView home(HttpSession session) {
 	ModelAndView m = new ModelAndView("Home");
 	m.addObject("image", true);
-	// get all categories along with products
-	// you have to integrate with the backend project
 	session.setAttribute("supplier",supplier);
 	session.setAttribute("supplierList",supplierDAO.list());
 	session.setAttribute("product",product);
@@ -118,6 +116,12 @@ public class HomeController {
 		session.setAttribute("category",category);
 		session.setAttribute("categoryList",categoryDAO.list());
 		return m;
+	}
+	
+	@RequestMapping("/403")
+	public String denied() {
+	
+		return "403";
 	}
 	
 	@RequestMapping("/about")

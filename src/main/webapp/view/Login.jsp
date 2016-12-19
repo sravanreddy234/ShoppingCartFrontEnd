@@ -1,4 +1,9 @@
- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ page isELIgnored="false"%>
    <!DOCTYPE html>
 <html>
 <style>
@@ -65,17 +70,17 @@ span.psw {
 
 <h2>Login Form</h2>
 
-<form:form action="login" commandName="userDetails" method="POST">
+<form name="loginform" action="<c:url value="/j_spring_security_check" />" method="post">
   <!-- <div class="imgcontainer">
     <img src="E:/10.jpg" alt="Avatar" class="avatar">
   </div> -->
 
   <div class="container">
-    <label><b><span class="glyphicon glyphicon-user">UserId</span></b></label>
-    <input type="text" placeholder="Enter UserId" name="id" required>
+    <label><b><span class="glyphicon glyphicon-user">UserName</span></b></label>
+    <input type="text" placeholder="Enter UserName" name="j_username" required>
 
     <label><b><span class="glyphicon glyphicon-lock">Password</span></b></label>
-    <input type="password" placeholder="Enter Password" name="password" required>
+    <input type="password" placeholder="Enter Password" name="j_password" required>
         
     <button type="submit">Login</button>
     
@@ -84,7 +89,7 @@ span.psw {
     
   </div>
 
-</form:form>
+</form>
 
 </body>
 </html>

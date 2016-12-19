@@ -47,12 +47,17 @@
                    
 
                     <br/>
-
+					<div class="col-md-2">
+						<a class="btn btn-danger btn-lg"
+							href="checkoutDetails.obj">QuickBuy</a>
+							
+							</div>
 					
 					<div class="col-md-10">
 						<a href="<spring:url value="/cartadd/${selectedProduct.productId}" />"<button class="btn btn-warning btn-lg">Add To Cart
 								</button>></a>
 					</div>
+					
                 </div>
             </div>
         </div>

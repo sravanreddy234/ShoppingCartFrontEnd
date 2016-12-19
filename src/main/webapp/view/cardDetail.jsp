@@ -91,7 +91,7 @@
 						<div class="col-md-offset-3">
 							<input type="submit" value="Checkout"
 								name="_eventId_confirmCheckout" class="btn btn-md btn-success">
-							<input type="submit" value="Back" name="_eventId_back"
+							<input type="submit" value="Back" name="_eventId_cancel"
 								class="btn btn-md btn-danger">
 						</div>
 
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 		</div>
-		<%-- <%@include file="../shared/footer.jsp"%> --%>
+		
 
 
 
