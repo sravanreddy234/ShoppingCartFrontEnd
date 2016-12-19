@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow  http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+	<var name="shippingAddress" class="com.niit.shoppingcart.model.ShippingAddress" />
+	<var name="billingAddress" class="com.niit.shoppingcart.model.BillingAddress" />
+	<var name="orderedItems" class="com.niit.shoppingcart.model.OrderedItems" />
+	<var name="orderDetail" class="com.niit.shoppingcart.model.OrderDetail" />
+		<var name="CardDetail" class="com.niit.shoppingcart.model.CardDetail" />
+	<var name="cart" class="com.niit.shoppingcart.model.Cart" />
+		<var name="UserDetails" class="com.niit.shoppingcart.model.UserDetails" />
+	<var name="checkoutDetails" class="com.niit.shoppingcart.model.CheckoutDetails"></var>
+
+	<on-start>
+		<evaluate expression="checkoutController.initFlow()" result="flowScope.shippingAddress" />
+	</on-start>
+
+	<view-state id="start" view="shippingAddress" model="flowScope.shippingAddress">
+		<transition on="submitShippingAddress" to="saveShipping" />
+		<transition on="back" to="toHome" />
+	</view-state>
+		<action-state id="saveShipping">
+		<evaluate expression="checkoutController.saveDetails(shippingAddress)"></evaluate>
+		<transition on="success" to="viewBillingDetails" />
+	</action-state>
+
+<!--  <action-state id="shippingDetails">
+		<evaluate
+			expression="flowController.addShippingAddress(flowScope.checkoutDetails,flowScope.shippingAddress)"></evaluate>
+		<transition on="success" to="viewBillingDetails" />
+			<transition on="failure" to="start" />
+	</action-state>  -->
+
+	<view-state id="viewBillingDetails" view="billingAddress" model="flowScope.billingAddress">
+		<transition on="submitBillingAddress" to="saveBilling" />
+		<transition on="cancel" to="start" />
+	</view-state>
+	
+		<action-state id="saveBilling">
+		<evaluate expression="checkoutController.saveDetails(billingAddress)"></evaluate>
+		<transition on="success" to="viewCardDetail" />
+	</action-state>
+
+<!-- 	<action-state id="billingDetails">
+		<evaluate
+			expression="flowController.addBillingAddress(flowScope.checkoutDetails,billingAddress)"></evaluate>
+		<transition on="success" to="viewCardDetail" />
+	</action-state> -->
+
+	<view-state id="viewCardDetail" view="cardDetail"
+		model="cardDetail">
+		<transition on="confirmCheckout" to="save" />
+			<transition on="cancel" to="viewBillingDetails" />
+	</view-state>
+
+<!-- 	<action-state id="paymentDetails">
+		<evaluate
+			expression="flowController.addCardDetails(flowScope.checkoutDetails,cardDetail)"></evaluate>
+		<transition on="success" to="orderConfirm" />
+	</action-state> -->
+
+	<action-state id="save">
+		<evaluate expression="checkoutController.saveDetails(cardDetail)"></evaluate>
+		<transition on="success" to="orderConfirm" />
+		
+	</action-state>
+
+
+	<view-state id="orderConfirm" view="orderConfirmed">
+		<transition on="finalHome" to="remove" />
+	<!-- 	<transition on="finalHome" to="toHome" /> -->
+	</view-state>
+	
+<action-state id="remove">
+		<evaluate expression="checkoutController.remove()"></evaluate>
+		<transition on="success" to="toHome" />
+	</action-state> 
+
+<!-- 
+	<end-state id="orderConfirm" view="cart/orderConfirmed"/> -->	
+	<!-- <end-state id="toCartView" view="externalRedirect:contextRelative:/user/cart/" /> -->
+	<end-state id="toHome" view="Home" />
+
+<global-transitions>
+		<transition on="back" to="Home" />
+	</global-transitions> 
+
+</flow>	

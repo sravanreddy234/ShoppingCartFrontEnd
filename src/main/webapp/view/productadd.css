@@ -1,0 +1,62 @@
+@CHARSET "ISO-8859-1";
+
+input, textarea{
+	outline: none;
+}
+
+.product-container{
+	background: white;
+	width: 95%;
+	margin: 50px auto;
+	padding: 30px;
+	-webkit-box-shadow: 0 0 5px #c0c0c0;
+}
+
+.add-area{
+	margin-top: 30px;
+}
+
+.add-content{
+	padding: 30px;
+}
+
+.add-content .submit{
+	background: #0e83cd;
+	border-color: transparent;
+	padding: 10px;
+	width: 200px;
+	color: white;
+	border-radius: 5px;
+}
+
+.add-content .submit:hover{
+	background: #0d78b9;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select,
+.form-group file{
+	margin: auto 15px;
+	padding: 5px;
+	border: 1px solid #c0c0c0;
+	border-radius: 4px;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+	border: 1px solid #0e83cd;
+}
+
+.form-group label{
+	margin:auto 15px;
+	padding-bottom: 5px;
+}
+
+.errormsg{
+	padding: 10px 0px;
+}
+
+.panel-primary{
+	overflow-x: hidden; 
+}
